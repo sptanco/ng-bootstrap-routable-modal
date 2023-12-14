@@ -1,27 +1,62 @@
-# NgBootstrapRoutableModals
+# Quick start
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+-Add lib:
 
-## Development server
+```console
+npm install ng-bootstrap-routable-modal
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+-Import module:
 
-## Code scaffolding
+<!-- prettier-ignore -->
+```angular
+import { NgBootstraproutableModalModule } from 'ng-bootstrap-routable-modal';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+NgBootstraproutableModalModule.forRoot({
+  modalsConfigurations: [{ component: DemoModalComponent, name: 'demo' }],
+})
+```
 
-## Build
+-Use the service for open the modal:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<!-- prettier-ignore -->
+```angular
+import { RoutableModalService } from 'ng-bootstrap-routable-modal';
 
-## Running unit tests
+constructor(public routableModalService: RoutableModalService) {}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+this.routableModalService.show('demo', undefined, {
+  name: 'Pluto'
+});
+```
 
-## Running end-to-end tests
+-Exemple of a Modal:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<!-- prettier-ignore -->
+```angular
+export class DemoModalComponent implements OnInit { 
+  public params: {name: string}; 
+  public form!: FormGroup; 
 
-## Further help
+  constructor( public activeModal: NgbActiveModal, private fb: FormBuilder, private routableModalService: RoutableModalService ) {} 
+  
+  ngOnInit(): void { 
+    this.form = this.fb.group({ name: null }); 
+    this.form.patchValue(this.params); 
+    this.form.valueChanges.subscribe((f) => this.routableModalService.updateQueryParams(f) ); 
+  } 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  passBack() { 
+    this.activeModal.close(this.form.getRawValue()); 
+    } 
+}
+```
+
+-Subscribe of the close event:
+
+<!-- prettier-ignore -->
+```angular
+this.routableModalService.openModal$
+  .pipe(filter((modal) => modal?.name === 'demo'))
+  .subscribe((modal) => modal?.ref?.closed.subscribe((r) => console.dir(r)));
+```
