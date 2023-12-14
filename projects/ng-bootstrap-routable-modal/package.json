@@ -1,0 +1,12 @@
+{
+  "name": "ng-bootstrap-routable-modal",
+  "version": "0.1.0",
+  "peerDependencies": {
+    "@angular/common": "^14.2.0",
+    "@angular/core": "^14.2.0",
+    "@ng-bootstrap/ng-bootstrap": "^13.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}
