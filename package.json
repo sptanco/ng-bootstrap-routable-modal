@@ -1,6 +1,10 @@
 {
   "name": "ng-bootstrap-routable-modal",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sptanco/ng-bootstrap-routable-modal.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
